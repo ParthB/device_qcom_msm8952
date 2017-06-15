@@ -1,16 +1,29 @@
-DEVICE_PACKAGE_OVERLAYS := device/qcom/msm8952_64/overlay
 
-TARGET_USES_QCOM_BSP := true
+
+TARGET_USES_AOSP_FOR_AUDIO := true
+TARGET_USES_QCOM_BSP := false
+
+TARGET_USES_AOSP := true
+
+TARGET_USES_HWC2 := true
+TARGET_USES_HWC2ON1ADAPTER := true
+
+ifeq ($(TARGET_USES_AOSP), true)
 # Add QC Video Enhancements flag
-TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
-TARGET_USES_NQ_NFC := false
+TARGET_ENABLE_QC_AV_ENHANCEMENTS := true 
+TARGET_USES_QTIC := false
+TARGET_USES_QTIC_EXTENSION := false
 TARGET_USES_IMS := false
+else
+TARGET_USES_NQ_NFC := false
+TARGET_USES_IMS := true
 
+TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 #QTIC flag
 -include $(QCPATH)/common/config/qtic-config.mk
-
+endif
 # Enable features in video HAL that can compile only on this platform
-TARGET_USES_MEDIA_EXTENSIONS := true
+TARGET_USES_MEDIA_EXTENSIONS := false 
 
 # media_profiles and media_codecs xmls for msm8952
 ifeq ($(TARGET_ENABLE_QC_AV_ENHANCEMENTS), true)
@@ -46,9 +59,9 @@ PRODUCT_PACKAGES += telephony-ext
 ifneq ($(strip $(QCPATH)),)
 #PRODUCT_BOOT_JARS += com.qti.dpmframework
 #PRODUCT_BOOT_JARS += dpmapi
-PRODUCT_BOOT_JARS += WfdCommon
+#PRODUCT_BOOT_JARS += WfdCommon
 #Android oem shutdown hook
-PRODUCT_BOOT_JARS += oem-services
+#PRODUCT_BOOT_JARS += oem-services
 #PRODUCT_BOOT_JARS += com.qti.location.sdk
 endif
 
@@ -63,13 +76,13 @@ ifneq (,$(strip $(wildcard $(PRODUCT_RENDERING_ENGINE_REVLIB))))
 #    MULTI_LANG_ZAWGYI := REVERIE
 endif
 
-PRODUCT_BOOT_JARS += qcmediaplayer
+#PRODUCT_BOOT_JARS += qcmediaplayer
 
 
 #Android EGL implementation
 PRODUCT_PACKAGES += libGLES_android
 
-PRODUCT_BOOT_JARS += \
+#PRODUCT_BOOT_JARS += \
            qcom.fmradio
 
 # Audio configuration file
@@ -122,7 +135,7 @@ PRODUCT_LOCALES += th_TH vi_VN tl_PH hi_IN ar_EG ru_RU tr_TR pt_BR bn_IN mr_IN t
 # When can normal compile this module, need module owner enable below commands
 # Add the overlay path
 
-PRODUCT_PACKAGE_OVERLAYS := $(QCPATH)/qrdplus/Extension/res \
+#RODUCT_PACKAGE_OVERLAYS := $(QCPATH)/qrdplus/Extension/res \
        $(QCPATH)/qrdplus/globalization/multi-language/res-overlay \
        $(PRODUCT_PACKAGE_OVERLAYS)
 
@@ -130,8 +143,8 @@ PRODUCT_PACKAGE_OVERLAYS := $(QCPATH)/qrdplus/Extension/res \
  PRODUCT_COPY_FILES += \
      device/qcom/msm8952_64/sensors/hals.conf:system/etc/sensors/hals.conf
 
-PRODUCT_SUPPORTS_VERITY := true
-PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/bootdevice/by-name/system
+#PRODUCT_SUPPORTS_VERITY := true
+#PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/bootdevice/by-name/system
 
 #for android_filesystem_config.h
 PRODUCT_PACKAGES += \
@@ -140,3 +153,36 @@ PRODUCT_PACKAGES += \
 #FEATURE_OPENGLES_EXTENSION_PACK support string config file
 PRODUCT_COPY_FILES += \
         frameworks/native/data/etc/android.hardware.opengles.aep.xml:system/etc/permissions/android.hardware.opengles.aep.xml
+
+#Enable keymaster Impl HAL Compilation 	124
+PRODUCT_PACKAGES += android.hardware.keymaster@3.0-impl
+
+# Display/Gralloc
+PRODUCT_PACKAGES += \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.allocator@2.0-service \
+    android.hardware.graphics.mapper@2.0-impl \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.composer@2.1-service \
+    android.hardware.memtrack@1.0-impl \
+    android.hardware.memtrack@1.0-service \
+    android.hardware.light@2.0-impl \
+    android.hardware.light@2.0-service \
+    android.hardware.configstore@1.0-service
+
+# Vibrator
+PRODUCT_PACKAGES += \
+    android.hardware.vibrator@1.0-impl \
+    android.hardware.vibrator@1.0-service \
+
+# vendor manifest file
+PRODUCT_COPY_FILES += \
+    device/qcom/msm8952_64/vintf.xml:$(TARGET_COPY_OUT_VENDOR)/manifest.xml
+
+
+PRODUCT_PACKAGES += \
+    android.hardware.audio@2.0-service \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio.effect@2.0-impl \
+    android.hardware.soundtrigger@2.0-impl
+

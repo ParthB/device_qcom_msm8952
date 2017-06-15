@@ -221,3 +221,5 @@ camera.lowpower.record.enable=1
 sched.colocate.enable=1
 
 persist.radio.lw_enabled=true
+qemu.hw.mainkeys=0
+

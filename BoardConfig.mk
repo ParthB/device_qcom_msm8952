@@ -10,7 +10,7 @@ TARGET_COMPILE_WITH_MSM_KERNEL := true
 TARGET_KERNEL_APPEND_DTB := true
 BOARD_USES_GENERIC_AUDIO := true
 USE_CLANG_PLATFORM_BUILD := true
-TARGET_DISABLE_DASH := false
+TARGET_DISABLE_DASH := true
 
 -include $(QCPATH)/common/msm8952_64/BoardConfigVendor.mk
 
@@ -73,12 +73,11 @@ PROTOBUF_SUPPORTED := false
 
 TARGET_USES_ION := true
 TARGET_USES_NEW_ION_API :=true
-TARGET_USES_QCOM_BSP := true
 TARGET_NO_RPC := true
 
 #TARGET_TS_MAKEUP := true
 
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk androidboot.selinux=permissive
 #BOARD_KERNEL_SEPARATED_DT := true
 
 BOARD_KERNEL_BASE        := 0x80000000
@@ -86,7 +85,6 @@ BOARD_KERNEL_PAGESIZE    := 2048
 BOARD_KERNEL_TAGS_OFFSET := 0x01E00000
 BOARD_RAMDISK_OFFSET     := 0x02000000
 
-TARGET_USES_AOSP := false
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
@@ -118,8 +116,13 @@ USE_SENSOR_MULTI_HAL := true
 #Enable peripheral manager
 TARGET_PER_MGR_ENABLED := true
 
+ifeq ($(TARGET_USES_AOSP), true)
 #Enable HW based full disk encryption
+TARGET_HW_DISK_ENCRYPTION := false
+else
+SDCLANG := true
 TARGET_HW_DISK_ENCRYPTION := true
+endif
 TARGET_CRYPTFS_HW_PATH := device/qcom/common/cryptfs_hw
 
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
