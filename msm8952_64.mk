@@ -10,7 +10,6 @@ TARGET_USES_HWC2ON1ADAPTER := true
 
 ifeq ($(TARGET_USES_AOSP), true)
 # Add QC Video Enhancements flag
-TARGET_ENABLE_QC_AV_ENHANCEMENTS := true 
 TARGET_USES_QTIC := false
 TARGET_USES_QTIC_EXTENSION := false
 TARGET_USES_IMS := false
@@ -18,24 +17,35 @@ else
 TARGET_USES_NQ_NFC := false
 TARGET_USES_IMS := true
 
-TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 #QTIC flag
 -include $(QCPATH)/common/config/qtic-config.mk
 endif
 # Enable features in video HAL that can compile only on this platform
 TARGET_USES_MEDIA_EXTENSIONS := false 
 
+TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
+
 # media_profiles and media_codecs xmls for msm8952
 ifeq ($(TARGET_ENABLE_QC_AV_ENHANCEMENTS), true)
 PRODUCT_COPY_FILES += device/qcom/msm8952_32/media/media_profiles_8952.xml:system/etc/media_profiles.xml \
+                      device/qcom/msm8952_32/media/media_profiles_8952.xml:system/vendor/etc/media_profiles.xml \
                       device/qcom/msm8952_32/media/media_profiles_8956.xml:system/etc/media_profiles_8956.xml \
-                      device/qcom/msm8952_32/media/media_codecs_8952.xml:system/etc/media_codecs.xml \
-                      device/qcom/msm8952_32/media/media_codecs_8956.xml:system/etc/media_codecs_8956.xml \
-                      device/qcom/msm8952_32/media/media_codecs_performance_8952.xml:system/etc/media_codecs_performance.xml \
-                      device/qcom/msm8952_32/media/media_codecs_performance_8956.xml:system/etc/media_codecs_performance_8956.xml \
-                      device/qcom/msm8952_32/media/media_codecs_8956_v1.xml:system/etc/media_codecs_8956_v1.xml \
-                      device/qcom/msm8952_32/media/media_codecs_performance_8956_v1.xml:system/etc/media_codecs_performance_8956_v1.xml
+                      device/qcom/msm8952_32/media/media_profiles_8956.xml:system/vendor/etc/media_profiles_8956.xml \
+                      device/qcom/msm8952_32/media/media_codecs_8952.xml:system/vendor/etc/media_codecs.xml \
+                      device/qcom/msm8952_32/media/media_codecs_8956.xml:system/vendor/etc/media_codecs_8956.xml \
+                      device/qcom/msm8952_32/media/media_codecs_performance_8952.xml:system/vendor/etc/media_codecs_performance.xml \
+                      device/qcom/msm8952_32/media/media_codecs_performance_8956.xml:system/vendor/etc/media_codecs_performance_8956.xml \
+                      device/qcom/msm8952_32/media/media_codecs_8956_v1.xml:system/vendor/etc/media_codecs_8956_v1.xml \
+                      device/qcom/msm8952_32/media/media_codecs_performance_8956_v1.xml:system/vendoretc/media_codecs_performance_8956_v1.xml
 endif
+
+# video seccomp policy files
+# copy to system/vendor as well (since some devices may symlink to system/vendor and not create an actual partition for vendor)
+PRODUCT_COPY_FILES += \
+    device/qcom/msm8952_64/seccomp/mediacodec-seccomp.policy:vendor/etc/seccomp_policy/mediacodec.policy \
+    device/qcom/msm8952_64/seccomp/mediaextractor-seccomp.policy:vendor/etc/seccomp_policy/mediaextractor.policy \
+    device/qcom/msm8952_64/seccomp/mediacodec-seccomp.policy:system/vendor/etc/seccomp_policy/mediacodec.policy \
+    device/qcom/msm8952_64/seccomp/mediaextractor-seccomp.policy:system/vendor/etc/seccomp_policy/mediaextractor.policy
 
 PRODUCT_COPY_FILES += device/qcom/msm8952_64/whitelistedapps.xml:system/etc/whitelistedapps.xml
 
