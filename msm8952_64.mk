@@ -25,6 +25,13 @@ TARGET_USES_MEDIA_EXTENSIONS := true
 
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 
+
+# Camera configuration file. Shared by passthrough/binderized camera HAL
+PRODUCT_PACKAGES += camera.device@1.0-impl
+PRODUCT_PACKAGES += android.hardware.camera.provider@2.4-impl
+# Enable binderized camera HAL
+PRODUCT_PACKAGES += android.hardware.camera.provider@2.4-service
+
 # media_profiles and media_codecs xmls for msm8952
 ifeq ($(TARGET_ENABLE_QC_AV_ENHANCEMENTS), true)
 PRODUCT_COPY_FILES += device/qcom/msm8952_32/media/media_profiles_8952.xml:system/etc/media_profiles.xml \
@@ -101,6 +108,15 @@ PRODUCT_PACKAGES += libGLES_android
 # MIDI feature
    PRODUCT_COPY_FILES += \
        frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml
+
+
+#for wlan
+PRODUCT_PACKAGES += \
+    wificond \
+    wifilogd
+ifneq ($(WLAN_CHIPSET),)
+PRODUCT_PACKAGES += $(WLAN_CHIPSET)_wlan.ko
+endif
 
 #ANT+ stack
 PRODUCT_PACKAGES += \
