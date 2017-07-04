@@ -21,7 +21,7 @@ TARGET_USES_IMS := true
 -include $(QCPATH)/common/config/qtic-config.mk
 endif
 # Enable features in video HAL that can compile only on this platform
-TARGET_USES_MEDIA_EXTENSIONS := false 
+TARGET_USES_MEDIA_EXTENSIONS := true
 
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 
