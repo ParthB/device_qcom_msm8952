@@ -10,20 +10,21 @@ TARGET_USES_HWC2ON1ADAPTER := true
 
 ifeq ($(TARGET_USES_AOSP), true)
 # Add QC Video Enhancements flag
-TARGET_USES_QTIC := false
-TARGET_USES_QTIC_EXTENSION := false
 TARGET_USES_IMS := false
 else
 TARGET_USES_NQ_NFC := false
 TARGET_USES_IMS := true
-
-#QTIC flag
--include $(QCPATH)/common/config/qtic-config.mk
 endif
 # Enable features in video HAL that can compile only on this platform
 TARGET_USES_MEDIA_EXTENSIONS := true
 
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
+
+#TARGET_USES_QTIC := true
+#TARGET_USES_QTIC_EXTENSION := true
+
+#QTIC flag
+-include $(QCPATH)/common/config/qtic-config.mk
 
 
 # Camera configuration file. Shared by passthrough/binderized camera HAL
