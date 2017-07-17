@@ -168,7 +168,7 @@ PRODUCT_LOCALES += th_TH vi_VN tl_PH hi_IN ar_EG ru_RU tr_TR pt_BR bn_IN mr_IN t
 
 # Sensor HAL conf file
  PRODUCT_COPY_FILES += \
-     device/qcom/msm8952_64/sensors/hals.conf:system/etc/sensors/hals.conf
+     device/qcom/msm8952_64/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
 
 #PRODUCT_SUPPORTS_VERITY := true
 #PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/bootdevice/by-name/system
