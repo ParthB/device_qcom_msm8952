@@ -8,10 +8,8 @@ TARGET_USES_HWC2ON1ADAPTER := true
 
 ifeq ($(TARGET_USES_AOSP), true)
 # Add QC Video Enhancements flag
-TARGET_USES_IMS := false
 else
 TARGET_USES_NQ_NFC := false
-TARGET_USES_IMS := true
 endif
 # Enable features in video HAL that can compile only on this platform
 TARGET_USES_MEDIA_EXTENSIONS := true
