@@ -170,8 +170,8 @@ vidc.enc.narrow.searchrange=1
 persist.qfp=false
 
 #min/max cpu in core control
-ro.core_ctl_min_cpu=2
-ro.core_ctl_max_cpu=4
+ro.vendor.qti.core_ctl_min_cpu=2
+ro.vendor.qti.core_ctl_max_cpu=4
 
 #property to enable DS2 dap
 audio.dolby.ds2.enabled=true
