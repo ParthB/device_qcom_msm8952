@@ -219,5 +219,6 @@ camera.lowpower.record.enable=1
 sched.colocate.enable=1
 
 persist.radio.lw_enabled=true
+persist.sys.usb.config=diag,serial_smd,rmnet_ipa,adb
 qemu.hw.mainkeys=0
 
