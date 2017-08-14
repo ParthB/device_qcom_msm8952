@@ -191,7 +191,8 @@ PRODUCT_PACKAGES += \
     android.hardware.memtrack@1.0-service \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service \
-    android.hardware.configstore@1.0-service
+    android.hardware.configstore@1.0-service \
+    android.hardware.broadcastradio@1.0-impl
 
 # Vibrator
 PRODUCT_PACKAGES += \
@@ -208,4 +209,19 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
     android.hardware.audio.effect@2.0-impl \
     android.hardware.soundtrigger@2.0-impl
+
+# Power
+PRODUCT_PACKAGES += \
+    android.hardware.power@1.0-service \
+    android.hardware.power@1.0-impl
+
+#Healthd packages
+PRODUCT_PACKAGES += android.hardware.health@1.0-impl \
+                    android.hardware.health@1.0-convert \
+                    android.hardware.health@1.0-service \
+                    libhealthd.msm
+
+# Fingerprint feature
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml \
 
